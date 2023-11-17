@@ -32,26 +32,37 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
+<script lang="ts">
 import api, { type Product } from '../api'
 
-const { render } = defineProps(['render'])
-const newProduct = ref<Partial<Product>>({})
+export default {
+  props: {
+    handleRender: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      newProduct: {} as Partial<Product>
+    }
+  },
+  methods: {
+    async submitForm() {
+      const product: Product = {
+        name_uz: this.newProduct.name_uz || '',
+        address: this.newProduct.address || '',
+        cost: this.newProduct.cost || 0,
+        product_type_id: 0,
+        created_date: Date.now()
+      }
 
-async function submitForm() {
-  const product: Product = {
-    name_uz: newProduct.value.name_uz || '',
-    address: newProduct.value.address || '',
-    cost: newProduct.value.cost || 0,
-    product_type_id: 0,
-    created_date: Date.now()
+      await api.createProduct(product).then(() => {
+        this.newProduct = {}
+        this.handleRender()
+      })
+    }
   }
-
-  await api.createProduct(product).then(() => {
-    newProduct.value = {}
-    render.value = Math.random()
-  })
 }
 </script>
 
