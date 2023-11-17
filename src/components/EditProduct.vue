@@ -26,18 +26,16 @@
 
 <script lang="ts">
 import api, { type Product } from '../api'
+import { useRender } from '../store/render'
 
 export default {
   data() {
     return {
-      editingProduct: { ...this.editing } as Product
+      editingProduct: { ...this.editing } as Product,
+      render: useRender()
     }
   },
   props: {
-    handleRender: {
-      type: Function,
-      required: true
-    },
     editClose: {
       type: Function,
       required: true
@@ -52,7 +50,7 @@ export default {
       if (this.editing) {
         await api.updateProduct(this.editingProduct).then(() => {
           this.editClose()
-          this.handleRender()
+          this.render.reRender()
         })
       }
     }

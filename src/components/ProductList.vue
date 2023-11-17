@@ -24,8 +24,15 @@
 </template>
 
 <script lang="ts">
-import { type Product } from '@/api'
+import api, { type Product } from '@/api'
+import { useRender } from '@/store/render'
+
 export default {
+  data() {
+    return {
+      render: useRender()
+    }
+  },
   props: {
     products: {
       type: Array as () => Product[],
@@ -34,10 +41,11 @@ export default {
     edit: {
       type: Function,
       required: true
-    },
-    deleteProduct: {
-      type: Function,
-      required: true
+    }
+  },
+  methods: {
+    async deleteProduct(id: number) {
+      await api.deleteProduct(id).then(() => this.render.reRender())
     }
   }
 }

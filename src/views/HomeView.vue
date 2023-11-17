@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <CreateProduct :handleRender="handleRender" />
+    <CreateProduct />
     <div v-if="editing">
-      <EditProduct :editing="editing" :handleRender="handleRender" :editClose="editClose" />
+      <EditProduct :editing="editing" :editClose="editClose" />
     </div>
     <div v-if="products.length !== 0" class="products__container">
-      <ProductList :products="products" :edit="edit" :deleteProduct="deleteProduct" />
+      <ProductList :products="products" :edit="edit" />
     </div>
     <div class="not__found" v-else>No products</div>
   </div>
@@ -16,6 +16,7 @@ import api, { type Product } from '../api'
 import CreateProduct from '@/components/CreateProduct.vue'
 import EditProduct from '@/components/EditProduct.vue'
 import ProductList from '@/components/ProductList.vue'
+import { useRender } from '../store/render'
 
 export default {
   data() {
@@ -23,7 +24,7 @@ export default {
       products: [] as Product[],
       newProduct: {} as Partial<Product>,
       editing: null as Product | null,
-      render: 0
+      render: useRender()
     }
   },
   components: {
@@ -32,9 +33,6 @@ export default {
     ProductList
   },
   methods: {
-    handleRender() {
-      this.render = Math.random()
-    },
     async fetchProducts() {
       const response = await api.getProducts()
       this.products = response.data
@@ -45,16 +43,13 @@ export default {
     },
     editClose() {
       this.editing = null
-    },
-    async deleteProduct(id: number) {
-      await api.deleteProduct(id).then(this.handleRender)
     }
   },
   mounted() {
     this.fetchProducts()
   },
   watch: {
-    render() {
+    'render.render'() {
       this.fetchProducts()
     }
   }

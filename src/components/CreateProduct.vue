@@ -34,17 +34,13 @@
 
 <script lang="ts">
 import api, { type Product } from '../api'
+import { useRender } from '../store/render'
 
 export default {
-  props: {
-    handleRender: {
-      type: Function,
-      required: true
-    }
-  },
   data() {
     return {
-      newProduct: {} as Partial<Product>
+      newProduct: {} as Partial<Product>,
+      render: useRender()
     }
   },
   methods: {
@@ -59,7 +55,7 @@ export default {
 
       await api.createProduct(product).then(() => {
         this.newProduct = {}
-        this.handleRender()
+        this.render.reRender()
       })
     }
   }
