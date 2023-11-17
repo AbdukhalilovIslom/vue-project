@@ -6,6 +6,7 @@
         <th scope="col">Name</th>
         <th scope="col">Address</th>
         <th scope="col">Cost</th>
+        <th scope="col">Created at</th>
         <th scope="col">Edit | Delete</th>
       </tr>
     </thead>
@@ -14,6 +15,15 @@
         <td>{{ product.name_uz }}</td>
         <td>{{ product.address }}</td>
         <td>${{ product.cost }}</td>
+        <td>
+          {{
+            ('0' + new Date(product.created_date).getHours()).slice(-2) +
+            ':' +
+            ('0' + new Date(product.created_date).getMinutes()).slice(-2) +
+            ':' +
+            ('0' + new Date(product.created_date).getSeconds()).slice(-2)
+          }}
+        </td>
         <td>
           <button class="product__edit" @click="editing.edit(product)">Edit</button>
           <button class="product__delete" @click="deleteProduct(product.id)">Delete</button>

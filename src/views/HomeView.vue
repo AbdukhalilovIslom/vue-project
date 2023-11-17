@@ -13,11 +13,11 @@
 
 <script lang="ts">
 import api, { type Product } from '../api'
+import { useRender } from '../store/render'
+import { useEditing } from '@/store/editing'
 import CreateProduct from '@/components/CreateProduct.vue'
 import EditProduct from '@/components/EditProduct.vue'
 import ProductList from '@/components/ProductList.vue'
-import { useRender } from '../store/render'
-import { useEditing } from '@/store/editing'
 
 export default {
   data() {
