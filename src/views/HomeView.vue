@@ -2,10 +2,10 @@
   <div class="home">
     <CreateProduct />
     <div v-if="editing">
-      <EditProduct :editing="editing" :editClose="editClose" />
+      <EditProduct />
     </div>
     <div v-if="products.length !== 0" class="products__container">
-      <ProductList :products="products" :edit="edit" />
+      <ProductList :products="products" />
     </div>
     <div class="not__found" v-else>No products</div>
   </div>
@@ -17,13 +17,14 @@ import CreateProduct from '@/components/CreateProduct.vue'
 import EditProduct from '@/components/EditProduct.vue'
 import ProductList from '@/components/ProductList.vue'
 import { useRender } from '../store/render'
+import { useEditing } from '@/store/editing'
 
 export default {
   data() {
     return {
       products: [] as Product[],
       newProduct: {} as Partial<Product>,
-      editing: null as Product | null,
+      editing: useEditing(),
       render: useRender()
     }
   },
@@ -36,13 +37,6 @@ export default {
     async fetchProducts() {
       const response = await api.getProducts()
       this.products = response.data
-    },
-    edit(product: Product) {
-      this.editing = { ...product }
-      console.log(this.editing)
-    },
-    editClose() {
-      this.editing = null
     }
   },
   mounted() {

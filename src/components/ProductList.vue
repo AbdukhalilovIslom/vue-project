@@ -15,7 +15,7 @@
         <td>{{ product.address }}</td>
         <td>${{ product.cost }}</td>
         <td>
-          <button class="product__edit" @click="edit(product)">Edit</button>
+          <button class="product__edit" @click="editing.edit(product)">Edit</button>
           <button class="product__delete" @click="deleteProduct(product.id)">Delete</button>
         </td>
       </tr>
@@ -26,20 +26,18 @@
 <script lang="ts">
 import api, { type Product } from '@/api'
 import { useRender } from '@/store/render'
+import { useEditing } from '@/store/editing'
 
 export default {
   data() {
     return {
-      render: useRender()
+      render: useRender(),
+      editing: useEditing()
     }
   },
   props: {
     products: {
       type: Array as () => Product[],
-      required: true
-    },
-    edit: {
-      type: Function,
       required: true
     }
   },
