@@ -31,6 +31,7 @@
         <button class="add__product__form__btn" type="submit">Create</button>
       </form>
     </div>
+    <CreateProduct :render="render" />
     <div v-if="editing" class="edit__popup">
       <div class="edit__inner">
         <img @click="editClose()" src="../assets/close.png" alt="" class="edit__close_icon" />
@@ -80,6 +81,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
 import api, { type Product } from '../api'
+import CreateProduct from '@/components/CreateProduct.vue'
 
 const products = ref<Product[]>([])
 const newProduct = ref<Partial<Product>>({})
