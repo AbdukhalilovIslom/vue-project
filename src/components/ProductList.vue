@@ -31,6 +31,22 @@
       </tr>
     </tbody>
   </table>
+  <table>
+    <tbody>
+      <tr class="parent">
+        <td class="div1">call1</td>
+        <td class="div2">call2</td>
+        <td class="div3">call3</td>
+        <td class="div4">call4</td>
+        <td class="div5">call5</td>
+        <td class="div6">call6</td>
+        <td class="div7">call7</td>
+        <td class="div8">call8</td>
+        <td class="div9">call9</td>
+        <td class="div10">call10</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script lang="ts">
